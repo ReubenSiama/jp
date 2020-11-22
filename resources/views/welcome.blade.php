@@ -12,7 +12,7 @@
             <h2>
                 JP Career Point conducts Free Counseling cum Mock interview every year for students/aspirants who clear Mains Exams.
             </h2>
-            <img src="/img/exam.jpg" alt="exam">
+            <img class="img-fluid max-width: 100%" src="/img/exam.jpg" alt="exam">
         </div>
     </div>
 
