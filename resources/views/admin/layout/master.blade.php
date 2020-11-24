@@ -20,8 +20,14 @@
 </head>
 
 <body class="">
-  <div class="wrapper ">
+ <div class="wrapper ">
+	@if(Auth::user()->role_id == 3)
     @extends('admin.layout.nav')
+	@elseif(Auth::user()->rile_id == 2)
+	@extends('admin.layout.faculty-nav')
+	@else
+	@extends('admin.layout.student-nav')
+	@endif
     <div class="main-panel">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -48,7 +54,7 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" href="/logout">Log out</a>
                 </div>
               </li>
             </ul>

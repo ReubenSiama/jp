@@ -17,6 +17,7 @@ Route::get('/login','App\Http\Controllers\HomeController@getLogin')->name('login
 Route::get('/register','App\Http\Controllers\HomeController@getRegister');
 
 Route::post('/login','App\Http\Controllers\HomeController@postLogin');
+Route::get('/logout','App\Http\Controllers\HomeController@postLogout');
 
 Route::middleware(['auth'])->group(function(){
 // Admin
