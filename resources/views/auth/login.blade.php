@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-<div class="col-sm-4 offset-4 mt-4">
+<div class="col-md-4 mx-auto mt-4">
     <form action="/login" method="POST">
         @csrf
         <div class="form-group">
