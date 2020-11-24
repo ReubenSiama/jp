@@ -21,16 +21,16 @@ class HomeController extends Controller
     public function postLogin(Request $request)
     {
         if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
-	if(Auth::user()->role_id == 1){
-		if(Auth::user()->studentDetail->status == 'Approved'){
-			return redirect('/dashboard');
-		}else{
-			Auth::logout();
-			return redirect('/login');
-		}
-	}else{
-            return redirect('/dashboard');
-	}
+            if(Auth::user()->role_id == 1){
+                if(Auth::user()->studentDetail->status == 'Approved'){
+                    return redirect('/dashboard');
+                }else{
+                    Auth::logout();
+                    return back()->withError('Waiting For Admin\'s Approval');
+                }
+            }else{
+                return redirect('/dashboard');
+            }
         }else{
             return back()->withError('Invalid Credentials')->withInput();
         }
