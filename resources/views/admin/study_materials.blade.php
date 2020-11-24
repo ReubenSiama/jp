@@ -7,9 +7,11 @@
                 <div class="card">
                     <div class="card-header card-header-primary">
                     <h4 class="card-title ">Study Materials</h4>
+                    @if(Auth::user()->role_id != 1)
                     <p class="card-category">
                         <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal" type="button">Add Study Material</button>
                     </p>
+                    @endif
                     </div>
                     <div class="card-body">
                     <div class="table-responsive">

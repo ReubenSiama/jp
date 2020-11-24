@@ -23,7 +23,8 @@ class HomeController extends Controller
         if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
             if(Auth::user()->role_id == 1){
                 if(Auth::user()->studentDetail->status == 'Approved'){
-                    return redirect('/dashboard');
+                    Auth::logoutOtherDevices(request('password'));
+                    return redirect('/study-materials');
                 }else{
                     Auth::logout();
                     return back()->withError('Waiting For Admin\'s Approval');
