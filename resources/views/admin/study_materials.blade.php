@@ -42,6 +42,7 @@
                                         </div>
                                     </td>
                                     <td>{{ $material->description }}</td>
+                                    <td>{{ $material->user->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
