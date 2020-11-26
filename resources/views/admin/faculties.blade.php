@@ -38,10 +38,17 @@
                                             {{ $faculty->email }}
                                         </td>
                                         <td>
-                                            {{ $faculty->role_id }}
+                                        @if($faculty->role_id == 2)
+                                            Faculty
+                                        @else
+                                            Admin
+                                        @endif
                                         </td>
                                         <td class="text-primary">
-                                            
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-success">Edit</button>
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -67,6 +74,13 @@
             </button>
         </div>
         <div class="modal-body">
+            <div class="form-goup">
+                <label for="role">Role</label>
+                <select name="role" id="role" class="form-control">
+                    <option value="2">Faculty</option>
+                    <option value="3">Admin</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" class="form-control" required>

@@ -28,16 +28,22 @@
               <p>Study Materials</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a class="nav-link" href="./icons.html">
               <i class="material-icons">bubble_chart</i>
               <p>Host Live Class</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item {{ Request::is('courses') ? 'active' : '' }}">
             <a class="nav-link" href="/courses">
               <i class="material-icons">location_ons</i>
               <p>Courses</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/settings" class="nav-link">
+              <i class="material-icons">settings</i>
+              <p>Settings</p>
             </a>
           </li>
         </ul>

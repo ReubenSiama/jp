@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\StudyMaterial;
 use Illuminate\Http\Request;
 use App\Models\StudentDetail;
+use App\Models\Setting;
 use App\Models\Course;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,12 +22,13 @@ class AdminController extends Controller
     public function getStudents()
     {
         $students = User::where('role_id',1)->get();
-        return view('admin.students', compact('students'));
+        $courses = Course::get();
+        return view('admin.students', compact('students', 'courses'));
     }
 
     public function getFaculties()
     {
-        $faculties = User::where('role_id', 2)->get();
+        $faculties = User::where('role_id', '!=', 1)->get();
         return view('admin.faculties', compact('faculties'));
     }
 
@@ -55,7 +57,7 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->role_id = 2;
+        $user->role_id = $request->role;
         if($user->save()){
             return back()->withSuccess('New Faculty Added Successfully');
         }else{
@@ -111,5 +113,20 @@ class AdminController extends Controller
         }else{
             return back()->withError('Oops! Something Went wrong');
         }
+    }
+
+    public function getSettings()
+    {
+        $settings = Setting::get();
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function addSetting(Request $request)
+    {
+        $setting = new Setting;
+        $setting->key = $request->key;
+        $setting->value = $request->value;
+        $setting->save();
+        return back()->withSuccess('Setting Added');
     }
 }

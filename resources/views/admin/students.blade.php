@@ -65,6 +65,10 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm">Decline</button>
                                             </form>
+
+                                        @else
+                                            <button class="btn btn-sm btn-success">Edit</button>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
                                         @endif
                                         </td>
                                     </tr>
