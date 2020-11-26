@@ -40,7 +40,6 @@
                                                 <source src="{{ asset('/storage'.$material->url) }}">
                                             </video>
                                         </div>
-                                        {{ $material->url }}
                                     </td>
                                     <td>{{ $material->description }}</td>
                                 </tr>
@@ -69,8 +68,17 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
+                <label for="course">Course</label>
+                <select name="course" id="course" class="form-control" required>
+                    <option value="">--Select Course --</option>
+                    @foreach($courses as $course)
+                    <option value="{{ $course->id }}">{{ $course->course_name }} ({{ $course->duration }})</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <input type="text" name="title" id="title" class="form-control">
             </div>
             <div class="form-group">
                 <label for="file" class="btn btn-success btn-sm">Please Select A File</label>
@@ -79,7 +87,7 @@
             <p class="file_name">No file chosen</p>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="4" class="form-control" required></textarea>
+                <textarea name="description" id="description" cols="30" rows="4" class="form-control"></textarea>
             </div>
         </div>
         <div class="modal-footer">
@@ -96,11 +104,19 @@
 
 <script>
     $(document).ready(function(){
+        let fileName = null;
+        $('button[type="submit"').on('click', function(){
+            if(fileName == null){
+                alert('No file chosen');
+                return false;
+            }
+        });
         $('input[type="file"]').change(function(e){
             if($('input[type="file"]').val()){
-                var fileName = e.target.files[0].name;
+                fileName = e.target.files[0].name;
                 $('.file_name').text(fileName);
             }else{
+                fileName = null;
                 $('.file_name').text('No file Chosen');
             }
         });

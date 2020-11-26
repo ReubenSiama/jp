@@ -22,11 +22,11 @@
 <body class="">
  <div class="wrapper ">
 	@if(Auth::user()->role_id == 3)
-    @extends('admin.layout.nav')
-	@elseif(Auth::user()->rile_id == 2)
-	@extends('admin.layout.faculty-nav')
-	@else
-	@extends('admin.layout.student-nav')
+    @include('admin.layout.nav')
+	@elseif(Auth::user()->role_id == 2)
+    @include('admin.layout.faculty-nav')
+	@elseif(Auth::user()->role_id == 1)
+    @include('admin.layout.student-nav')
 	@endif
     <div class="main-panel">
     <!-- Navbar -->

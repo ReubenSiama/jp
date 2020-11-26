@@ -81,8 +81,15 @@ class AdminController extends Controller
 
     public function getStudyMaterial()
     {
-        $studyMaterials = StudyMaterial::get();
-        return view('admin.study_materials', compact('studyMaterials'));
+        $studyMaterials = StudyMaterial::when(Auth::user()->role_id == 1, function($q){
+            return $q->where('course_id', Auth::user()->studentDetail->course_id)->get();
+        })->when(Auth::user()->role_id == 2, function($q){
+            return $q->where('user_id', Auth::user()->id)->get();
+        })->when(Auth::user()->role_id == 3, function($q){
+            return $q->get();
+        });
+        $courses = Course::get();
+        return view('admin.study_materials', compact('studyMaterials', 'courses'));
     }
 
     public function addStudyMaterial(Request $request)
@@ -93,11 +100,12 @@ class AdminController extends Controller
         Storage::putFileAs('public/study_materials', $file, $filename);
 
         $studyMaterial = new StudyMaterial;
+        $studyMaterial->course_id = $request->course;
         $studyMaterial->title = $request->title;
         $studyMaterial->url = '/study_materials'.'/'.$filename;
         $studyMaterial->description = $request->description;
         $studyMaterial->batch = '2020-2021';
-        $studyMaterial->user_id = 1;
+        $studyMaterial->user_id = Auth::user()->id;
         if($studyMaterial->save()){
             return back()->withSuccess('Study Material Added successfully');
         }else{
