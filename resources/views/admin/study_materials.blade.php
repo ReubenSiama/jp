@@ -29,6 +29,11 @@
                             <th>
                                 Uploaded By
                             </th>
+                            @if(Auth::user()->role_id != 1)
+                            <th>
+                                Make Public/Private
+                            </th>
+                            @endif
                         </thead>
                         <tbody>
                             @foreach($studyMaterials as $material)
@@ -36,13 +41,22 @@
                                     <td>{{ $material->title }}</td>
                                     <td>
                                         <div class="media">
-                                            <video oncontextmenu="return false;" controls controlslist="nodownload" height="200">
+                                            <video class="embed-responsive-item" oncontextmenu="return false;" controls controlslist="nodownload" height="200">
                                                 <source src="{{ asset('/storage'.$material->url) }}">
                                             </video>
                                         </div>
                                     </td>
                                     <td>{{ $material->description }}</td>
                                     <td>{{ $material->user->name }}</td>
+                                    @if(Auth::user()->role_id != 1)
+                                    <td>
+                                        <form action="/change-video/{{ $material->id }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="status" value="{{ $material->status == 'Public' ? 'Private' : 'Public' }}">
+                                            <button type="submit" class="btn btn-sm btn-success">Make {{ $material->status == 'Public' ? 'Private' : 'Public' }}</button>
+                                        </form>
+                                    </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -93,7 +107,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn upload-material btn-primary">Save</button>
         </div>
         </div>
     </div>
@@ -106,7 +120,7 @@
 <script>
     $(document).ready(function(){
         let fileName = null;
-        $('button[type="submit"').on('click', function(){
+        $('button.upload-material').on('click', function(){
             if(fileName == null){
                 alert('No file chosen');
                 return false;

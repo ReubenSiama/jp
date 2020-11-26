@@ -84,7 +84,7 @@ class AdminController extends Controller
     public function getStudyMaterial()
     {
         $studyMaterials = StudyMaterial::when(Auth::user()->role_id == 1, function($q){
-            return $q->where('course_id', Auth::user()->studentDetail->course_id)->get();
+            return $q->where('course_id', Auth::user()->studentDetail->course_id)->where('status','Public')->get();
         })->when(Auth::user()->role_id == 2, function($q){
             return $q->where('user_id', Auth::user()->id)->get();
         })->when(Auth::user()->role_id == 3, function($q){
@@ -128,5 +128,13 @@ class AdminController extends Controller
         $setting->value = $request->value;
         $setting->save();
         return back()->withSuccess('Setting Added');
+    }
+
+    public function changeVideo(Request $request, $id)
+    {
+        $material = StudyMaterial::findOrFail($id);
+        $material->status = $request->status;
+        $material->save();
+        return back();
     }
 }

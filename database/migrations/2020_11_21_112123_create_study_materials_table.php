@@ -21,6 +21,7 @@ class CreateStudyMaterialsTable extends Migration
             $table->string('description')->nullable();
             $table->string('batch')->nullable();
             $table->integer('user_id');
+            $table->enum('status',['Public','Private'])->default('Public');
             $table->timestamps();
         });
     }
