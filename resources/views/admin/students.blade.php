@@ -7,7 +7,6 @@
                     <div class="card">
                         <div class="card-header card-header-primary">
                         <h4 class="card-title ">Students</h4>
-                        <p class="card-category">Unapproved students are displayed on top</p>
                         </div>
                         <div class="card-body">
                         <div class="table-responsive">
