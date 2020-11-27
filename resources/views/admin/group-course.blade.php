@@ -20,7 +20,11 @@
                     </div>
                 </div>
                 <div class="col-md-9">
+                @if(count($students) != 0)
                     @include('admin.students', [$students, $courses])
+                @else
+                    No data to display
+                @endif
                 </div>
             </div>
         </div>

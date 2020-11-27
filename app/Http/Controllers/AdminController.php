@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     public function getStudents()
     {
-        $students = User::where('role_id',1)->get();
+        $students = [];
         $courses = Course::get();
         return view('admin.group-course', compact('students', 'courses'));
     }
