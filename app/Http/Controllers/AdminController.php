@@ -23,7 +23,15 @@ class AdminController extends Controller
     {
         $students = User::where('role_id',1)->get();
         $courses = Course::get();
-        return view('admin.students', compact('students', 'courses'));
+        return view('admin.group-course', compact('students', 'courses'));
+    }
+
+    public function getSpecificStudents($id)
+    {
+        $unfiltered = User::where('role_id',1)->get();
+        $students = $unfiltered->where('studentDetail.course_id',$id);
+        $courses = Course::get();
+        return view('admin.group-course', compact('students', 'courses'));
     }
 
     public function getFaculties()
@@ -51,6 +59,16 @@ class AdminController extends Controller
         }
     }
 
+    public function updateCourse(Request $request)
+    {
+        $course = Course::findOrFail($request->edit_course_id);
+        $course->course_name = $request->edit_course_name;
+        $course->duration = $request->edit_course_duration;
+        $course->fee = $request->edit_course_fee;
+        $course->save();
+        return back()->withSuccess('Course Updated');
+    }
+
     public function addFaculty(Request $request)
     {
         $user = new User;
@@ -63,6 +81,23 @@ class AdminController extends Controller
         }else{
             return back()->withError('Oops! Something Went Wrong');
         }
+    }
+
+    public function updateFaculty(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role;
+        $user->save();
+        return back()->withSuccess('Faculty Updated');
+    }
+
+    public function deleteFaculty(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->delete();
+        return back()->withSuccess('Faculty Deleted');
     }
 
     public function approve($id)

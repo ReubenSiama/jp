@@ -41,7 +41,7 @@
                                     <td>{{ $material->title }}</td>
                                     <td>
                                         <div class="media">
-                                            <video class="embed-responsive-item" oncontextmenu="return false;" controls controlslist="nodownload" height="200">
+                                            <video data-id="{{ $material->id }}" id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload" height="200">
                                                 <source src="{{ asset('/storage'.$material->url) }}">
                                             </video>
                                         </div>
@@ -135,6 +135,13 @@
                 $('.file_name').text('No file Chosen');
             }
         });
+
+        $('.video').on('click', function(){
+            var id = $(this).data("id");
+            var video = document.getElementById(id);
+            var video_duration = document.getElementById(id).duration
+            console.log(video);
+        })
     });
 </script>
 

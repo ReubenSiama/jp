@@ -46,8 +46,16 @@
                                         </td>
                                         <td class="text-primary">
                                             <div class="btn-group">
-                                                <button class="btn btn-sm btn-success">Edit</button>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                <button class="btn btn-sm btn-success edit-faculty"
+                                                data-id="{{ $faculty->id }}"
+                                                data-name="{{ $faculty->name }}"
+                                                data-email="{{ $faculty->email }}"
+                                                data-role="{{ $faculty->role_id }}"
+                                                data-toggle="modal"
+                                                data-target="#edit"
+                                                >Edit</button>
+                                                <button data-id="{{ $faculty->id }}" data-toggle="modal"
+                                                data-target="#delete" class="btn btn-sm btn-danger delete-faculty">Delete</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -102,4 +110,91 @@
     </div>
     </div>
 </form>
+
+
+<form action="/update-faculty" method="post">
+    @csrf
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editLabel">Edit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+        <input type="hidden" name="id" id="edit-id">
+            <div class="form-goup">
+                <label for="edit-role">Role</label>
+                <select name="role" id="edit-role" class="form-control">
+                    <option value="2">Faculty</option>
+                    <option value="3">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-name">Name</label>
+                <input type="text" name="name" id="edit-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-email">Email</label>
+                <input type="email" name="email" id="edit-email" class="form-control" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+<form action="/delete-faculty" method="post">
+    @csrf
+    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteLabel">Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+        <input type="hidden" name="id" id="delete-id">
+            Are you sure you want to delete this user?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-primary">Yes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+@endsection
+
+@section('scripts')
+
+<script>
+    $(document).ready(function(){
+        $('.edit-faculty').on('click', function(){
+            let id = $(this).data("id");
+            let name = $(this).data('name');
+            let email = $(this).data('email');
+            let role = $(this).data('role');
+            $('#edit-id').val(id);
+            $('#edit-email').val(email);
+            $('#edit-name').val(name);
+            $('#edit-role').val(role);
+        });
+
+        $('.delete-faculty').on('click', function(){
+            let id = $(this).data("id");
+            $('#delete-id').val(id);
+        });
+    });
+</script>
+
 @endsection

@@ -4,12 +4,12 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+          <!-- <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
             <a class="nav-link" href="/dashboard">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item {{ Request::is('study-materials') ? 'active' : '' }}">
             <a class="nav-link" href="/study-materials">
               <i class="material-icons">library_books</i>

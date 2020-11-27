@@ -10,7 +10,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item {{ Request::is('students') ? 'active' : '' }}">
+          <li class="nav-item {{ Request::is('students') ? 'active' : '' }} {{ Request::is('students/*') ? 'active' : '' }}">
             <a class="nav-link" href="/students">
               <i class="material-icons">people</i>
               <p>Students</p>

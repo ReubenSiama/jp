@@ -23,13 +23,14 @@ Route::middleware(['auth'])->group(function(){
 // Admin
 Route::get('/dashboard', 'App\Http\Controllers\AdminController@index')->name('Dashboard');
 Route::get('/students','App\Http\Controllers\AdminController@getStudents')->name('Students');
+Route::get('/students/{id}','App\Http\Controllers\AdminController@getSpecificStudents')->name('Students');
 Route::get('/faculties','App\Http\Controllers\AdminController@getFaculties')->name('Faculties');
 Route::get('/courses','App\Http\Controllers\AdminController@getCourses')->name('Courses');
 Route::get('/study-materials','App\Http\Controllers\AdminController@getStudyMaterial')->name('Study Materials');
 Route::get('/settings','App\Http\Controllers\AdminController@getSettings')->name('Settings');
 
 Route::post('/add-course','App\Http\Controllers\AdminController@addCourse')->name('add-course');
-Route::post('/add-faculty','App\Http\Controllers\AdminController@addFaculty')->name('add-faculty');
+Route::post('/update-course','App\Http\Controllers\AdminController@updateCourse');
 
 Route::post('/approve/{id}', 'App\Http\Controllers\AdminController@approve');
 Route::post('/decline/{id}', 'App\Http\Controllers\AdminController@decline');
@@ -38,7 +39,15 @@ Route::post('/add-study-material','App\Http\Controllers\AdminController@addStudy
 Route::post('/add-setting','App\Http\Controllers\AdminController@addSetting');
 Route::post('/change-video/{id}','App\Http\Controllers\AdminController@changeVideo');
 
+
 // Faculty
+Route::post('/add-faculty','App\Http\Controllers\AdminController@addFaculty')->name('add-faculty');
+Route::post('/update-faculty', 'App\Http\Controllers\AdminController@updateFaculty');
+Route::post('/delete-faculty','App\Http\Controllers\AdminController@deleteFaculty');
+
+
+Route::post('/update-student','App\Http\Controllers\StudentsController@updateStudent');
+Route::post('/delete-student','App\Http\Controllers\StudentsController@deleteStudent');
 
 });
 // Student
