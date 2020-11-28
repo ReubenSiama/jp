@@ -73,6 +73,9 @@ class AdminController extends Controller
 
     public function addFaculty(Request $request)
     {
+        $request->validate([
+            'email'=> 'required|unique:users'
+        ]);
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -88,8 +91,16 @@ class AdminController extends Controller
     public function updateFaculty(Request $request)
     {
         $user = User::findOrFail($request->id);
+        if($user->email != $request->edit_email){
+            $validator = \Validator::make($request->all(),[
+                'email' => 'required|unique:users'
+            ]);
+            if($validator->fails()){
+                return back()->with('emailError','This email is already taken')->withInput();
+            }
+        }
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->email = $request->edit_email;
         $user->role_id = $request->role;
         $user->save();
         return back()->withSuccess('Faculty Updated');

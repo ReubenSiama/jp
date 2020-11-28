@@ -91,11 +91,16 @@
             </div>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" class="form-control" required>
+                <input type="text" value="{{ old('name') }} " name="name" id="name" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" class="form-control" required>
+                <input type="email" value="{{ old('email') }}" name="email" id="email" class="form-control" required>
+                @error('email')
+                <div class="alert-danger">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -127,18 +132,21 @@
         <input type="hidden" name="id" id="edit-id">
             <div class="form-goup">
                 <label for="edit-role">Role</label>
-                <select name="role" id="edit-role" class="form-control">
+                <select name="role" id="edit-role" class="form-control" value="{{ old('role') }}">
                     <option value="2">Faculty</option>
                     <option value="3">Admin</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="edit-name">Name</label>
-                <input type="text" name="name" id="edit-name" class="form-control" required>
+                <input type="text" name="name" id="edit-name" class="form-control" required value="{{ old('name') }}">
             </div>
             <div class="form-group">
                 <label for="edit-email">Email</label>
-                <input type="email" name="email" id="edit-email" class="form-control" required>
+                <input type="email" name="edit_email" id="edit-email" class="form-control" required value="{{ old('edit-email') }}">
+                @if(session('emailError'))
+                    <div class="alert-danger">{{ session('emailError') }}</div>
+                @endif
             </div>
         </div>
         <div class="modal-footer">
@@ -179,6 +187,14 @@
 
 <script>
     $(document).ready(function(){
+        @error('email')
+            $("#exampleModal").modal('show');
+        @enderror
+
+        @if(session('emailError'))
+            $("#edit").modal('show');
+        @endif
+
         $('.edit-faculty').on('click', function(){
             let id = $(this).data("id");
             let name = $(this).data('name');

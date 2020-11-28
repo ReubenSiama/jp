@@ -15,6 +15,9 @@ class StudentsController extends Controller
 
     public function postRegister(Request $request)
     {
+        $request->validate([
+            'email'=> 'required|unique:users'
+        ]);
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
@@ -40,6 +43,11 @@ class StudentsController extends Controller
     public function updateStudent(Request $request)
     {
         $user = User::findOrFail($request->id);
+        if($user->email != $request->email){
+            $request->validate([
+                'email'=> 'required|unique:users'
+            ]);
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         if($user->save()){

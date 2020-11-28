@@ -117,33 +117,38 @@
         <input type="hidden" name="id" id="edit-id">
             <div class="form-goup">
                 <label for="edit-course">Course</label>
-                <select name="course" id="edit-course" class="form-control">
+                <select name="course" id="edit-course" class="form-control" value="{{ old('course') }}">
                     @foreach($courses as $course)
-                    <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+                    <option {{ old("course") == $course->id ? 'selected' : '' }} value="{{ $course->id }}">{{ $course->course_name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="edit-name">Name</label>
-                <input type="text" name="name" id="edit-name" class="form-control" required>
+                <input type="text" name="name" id="edit-name" class="form-control" required value="{{ old('name') }}">
             </div>
             <div class="form-group">
                 <label for="edit-email">Email</label>
-                <input type="email" name="email" id="edit-email" class="form-control" required>
+                <input type="email" value="{{ old('email') }}" name="email" id="edit-email" class="form-control" required>
+                @error('email')
+                    <div class="alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="edit-father">Father's Name</label>
-                <input type="text" name="father_name" id="edit-father" class="form-control" required>
+                <input type="text" value="{{ old('father_name') }}" name="father_name" id="edit-father" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="edit-contact">Contact</label>
-                <input type="text" name="contact" id="edit-contact" class="form-control" required>
+                <input type="text" value="{{ old('contact') }}" name="contact" id="edit-contact" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="edit-status">Status</label>
                 <select name="status" id="edit-status" class="form-control">
-                    <option value="Approved">Approved</option>
-                    <option value="Declined">Declined</option>
+                    <option {{ old('status') == "Approved" ? 'selected' : '' }} value="Approved">Approved</option>
+                    <option {{ old('status') == "Declined" ? 'selected' : '' }} value="Declined">Declined</option>
                 </select>
             </div>
         </div>
@@ -184,6 +189,9 @@
 
 <script>
     $(document).ready(function(){
+        @error('email')
+            $('#edit').modal('show');
+        @enderror
         $('.edit-student').on('click', function(){
             let id = $(this).data("id");
             let name = $(this).data('name');
