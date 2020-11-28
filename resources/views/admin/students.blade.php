@@ -7,88 +7,94 @@
                             <h4 class="card-title ">Students</h4>
                         </div>
                         <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                            <thead class=" text-primary">
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Course
-                                </th>
-                                <th>
-                                    Father's Name
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Contact
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-                                <th>
-                                    Action
-                                </th>
-                            </thead>
-                            <tbody>
-                                @foreach($students as $student)
-                                    <tr>
-                                        <td>
-                                            {{ $student->name }}
-                                        </td>
-                                        <td>
-                                            {{ $student->studentDetail->course->course_name }}
-                                        </td>
-                                        <td>
-                                            {{ $student->studentDetail->fathers_name }}
-                                        </td>
-                                        <td>
-                                            {{ $student->email }}
-                                        </td>
-                                        <td class="text-primary">
-                                            {{ $student->studentDetail->contact_no }}
-                                        </td>
-                                        <td>
-                                            {{ $student->studentDetail->status }}
-                                        </td>
-                                        <td>
-                                        @if($student->studentDetail->status == 'Pending')
-                                            <form action="/approve/{{ $student->id }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                            </form>
-                                            <form action="/decline/{{ $student->id }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm">Decline</button>
-                                            </form>
-
-                                        @else
-                                            <button
-                                            data-id="{{ $student->id }}"
-                                            data-name="{{ $student->name }}"
-                                            data-email="{{ $student->email }}"
-                                            data-fathersname="{{ $student->studentDetail->fathers_name }}"
-                                            data-course="{{ $student->studentDetail->course_id }}"
-                                            data-contact="{{ $student->studentDetail->contact_no }}"
-                                            data-status="{{ $student->studentDetail->status }}"
-                                            data-toggle="modal"
-                                            data-target="#edit"
-                                            class="btn btn-sm btn-success edit-student">Edit</button>
-                                            <button
-                                            data-id="{{ $student->id }}"
-                                            data-toggle="modal"
-                                            data-target="#delete"
-                                            class="btn btn-sm btn-danger delete-student">Delete</button>
-                                        @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Course
+                                        </th>
+                                        <th>
+                                            Father's Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Contact
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($students as $student)
+                                            <tr>
+                                                <td>
+                                                    {{ $student->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $student->studentDetail->course->course_name }}
+                                                </td>
+                                                <td>
+                                                    {{ $student->studentDetail->fathers_name }}
+                                                </td>
+                                                <td>
+                                                    {{ $student->email }}
+                                                </td>
+                                                <td class="text-primary">
+                                                    {{ $student->studentDetail->contact_no }}
+                                                </td>
+                                                <td>
+                                                    {{ $student->studentDetail->status }}
+                                                </td>
+                                                <td>
+                                                @if($student->studentDetail->status == 'Pending')
+                                                <div class="btn-group">
+                                                    <form action="/approve/{{ $student->id }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-default btn-sm">Approve</button>
+                                                    </form>
+                                                    <form action="/decline/{{ $student->id }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-warning btn-sm">Decline</button>
+                                                    </form>
+                                                </div>
+                                                @else
+                                                <div class="btn-group">
+                                                    <button
+                                                    data-id="{{ $student->id }}"
+                                                    data-name="{{ $student->name }}"
+                                                    data-email="{{ $student->email }}"
+                                                    data-fathersname="{{ $student->studentDetail->fathers_name }}"
+                                                    data-course="{{ $student->studentDetail->course_id }}"
+                                                    data-contact="{{ $student->studentDetail->contact_no }}"
+                                                    data-status="{{ $student->studentDetail->status }}"
+                                                    data-toggle="modal"
+                                                    data-target="#edit"
+                                                    class="btn btn-sm btn-success edit-student">Edit</button>
+                                                    <button
+                                                    data-id="{{ $student->id }}"
+                                                    data-toggle="modal"
+                                                    data-target="#delete"
+                                                    class="btn btn-sm btn-danger delete-student">Delete</button>
+                                                </div>
+                                                @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        </div>
+                    </div>
+                    <div class="text-center">
+                        {{ $students->links() }}
                     </div>
                 </div>
             </div>

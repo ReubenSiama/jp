@@ -11,9 +11,11 @@
                         <div class="card-body">
                             <ul class="list-group">
                                 @foreach($courses as $course)
-                                    <li class="list-group-item {{ Route::input('id') == $course->id ? 'active' : '' }}">
-                                        <a href="/students/{{ $course->id }}" class="link {{ Route::input('id') == $course->id ? 'text-white' : 'text-black' }}">{{ $course->course_name }}</a>
-                                    </li>
+                                    <a href="/students/{{ $course->id }}" class="link {{ Route::input('id') == $course->id ? 'text-white' : 'text-black' }}">
+                                        <li class="list-group-item {{ Route::input('id') == $course->id ? 'active' : '' }}">
+                                            {{ $course->course_name }}
+                                        </li>
+                                    </a>
                                 @endforeach
                             </ul>
                         </div>

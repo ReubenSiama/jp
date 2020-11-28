@@ -28,15 +28,17 @@ class AdminController extends Controller
 
     public function getSpecificStudents($id)
     {
-        $unfiltered = User::where('role_id',1)->get();
-        $students = $unfiltered->where('studentDetail.course_id',$id);
+        $students = User::where('role_id',1)->whereHas('studentDetail', function($query) use ($id){
+            $query->where('course_id', $id);
+        })
+        ->paginate(10);
         $courses = Course::get();
         return view('admin.group-course', compact('students', 'courses'));
     }
 
     public function getFaculties()
     {
-        $faculties = User::where('role_id', '!=', 1)->get();
+        $faculties = User::where('role_id', '!=', 1)->paginate(10);
         return view('admin.faculties', compact('faculties'));
     }
 
@@ -119,11 +121,11 @@ class AdminController extends Controller
     public function getStudyMaterial()
     {
         $studyMaterials = StudyMaterial::when(Auth::user()->role_id == 1, function($q){
-            return $q->where('course_id', Auth::user()->studentDetail->course_id)->where('status','Public')->get();
+            return $q->where('course_id', Auth::user()->studentDetail->course_id)->where('status','Public')->orderBy('created_at','DESC')->get();
         })->when(Auth::user()->role_id == 2, function($q){
-            return $q->where('user_id', Auth::user()->id)->get();
+            return $q->where('user_id', Auth::user()->id)->orderBy('created_at','DESC')->get();
         })->when(Auth::user()->role_id == 3, function($q){
-            return $q->get();
+            return $q->orderBy('created_at','DESC')->get();
         });
         $courses = Course::get();
         return view('admin.study_materials', compact('studyMaterials', 'courses'));
