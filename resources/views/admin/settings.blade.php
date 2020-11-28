@@ -35,7 +35,7 @@
                                         {{ $setting->value }}
                                     </td>
                                     <td class="text-primary">
-                                        <button class="btn btn-sm btn-success">Edit</button>
+                                        <button data-id="{{ $setting->id }}" data-key="{{ $setting->key }}" data-value="{{ $setting->value }}" class="btn btn-sm btn-success edit-setting" data-toggle="modal" data-target="#edit">Edit</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -79,4 +79,54 @@
     </div>
     </div>
 </form>
+
+<form action="/update-setting" method="post">
+@csrf
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editLabel">Edit Setting</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" name="id" id="edit-id">
+            <div class="form-group">
+                <label for="edit-key">Key</label>
+                <input type="text" name="key" id="edit-key" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="edit-value">Value</label>
+                <input type="text" name="value" id="edit-value" class="form-control" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+@endsection
+
+@section('scripts')
+
+<script>
+    $(document).ready(function(){
+        $('.edit-setting').on('click', function(){
+            let id = $(this).data("id");
+            let key = $(this).data('key');
+            let value = $(this).data('value');
+
+            $('#edit-id').val(id);
+            $('#edit-key').val(key);
+            $('#edit-value').val(value);
+            
+        });
+    });
+</script>
+
 @endsection

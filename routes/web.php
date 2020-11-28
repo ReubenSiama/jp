@@ -37,6 +37,7 @@ Route::post('/decline/{id}', 'App\Http\Controllers\AdminController@decline');
 
 Route::post('/add-study-material','App\Http\Controllers\AdminController@addStudyMaterial');
 Route::post('/add-setting','App\Http\Controllers\AdminController@addSetting');
+Route::post('/update-setting','App\Http\Controllers\AdminController@updateSetting');
 Route::post('/change-video/{id}','App\Http\Controllers\AdminController@changeVideo');
 
 

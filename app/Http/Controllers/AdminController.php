@@ -178,6 +178,15 @@ class AdminController extends Controller
         return back()->withSuccess('Setting Added');
     }
 
+    public function updateSetting(Request $request)
+    {
+        $setting = Setting::findOrFail($request->id);
+        $setting->key = $request->key;
+        $setting->value = $request->value;
+        $setting->save();
+        return back()->withSuccess('Setting Added');
+    }
+
     public function changeVideo(Request $request, $id)
     {
         $material = StudyMaterial::findOrFail($id);
