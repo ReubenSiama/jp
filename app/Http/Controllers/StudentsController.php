@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\StudentDetail;
+use App\Models\VideoWatchTime;
+use Auth;
 
 class StudentsController extends Controller
 {
@@ -77,6 +79,17 @@ class StudentsController extends Controller
 
     public function watchedVideo(Request $request)
     {
-        return $request->all();
+        $watched = VideoWatchTime::where('user_id',Auth::user()->id)->where('study_material_id', $request->studyMaterialId)->first();
+        if($watched == null){
+            $watched = new VideoWatchTime;
+            $watched->user_id = Auth::user()->id;
+            $watched->study_material_id = $request->studyMaterialId;
+            $watched->watch_times = 1;
+            $watched->save();
+        }else{
+            $watched->watch_times = $watched->watch_times + 1;
+            $watched->save();
+        }
+        return back();
     }
 }

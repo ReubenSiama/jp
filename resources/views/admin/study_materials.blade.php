@@ -40,10 +40,31 @@
                                 <tr>
                                     <td>{{ $material->title }}</td>
                                     <td>
+                                        @php
+                                            $check = false;
+                                        @endphp
+                                        @if (Auth::user()->role_id == 1)
+                                            @if(count($material->videoWatchTime) == 0)
+                                                You have watched the video 0/{{ $watch_time->value }} times
+                                            @endif
+                                            @foreach($material->videoWatchTime as $watchTime)
+                                                @if ($watchTime->user_id == Auth::user()->id && $watchTime->study_material_id == $material->id)
+                                                    @if ($watchTime->watch_times == $watch_time->value)
+                                                    @php
+                                                        $check = true;
+                                                    @endphp
+                                                        You can no longer view this study material<br>
+                                                    @endif
+                                                    You have watched the video {{ $watchTime->watch_times }}/{{ $watch_time->value }} times
+                                                @endif
+                                            @endforeach
+                                        @endif
                                         <div class="media">
-                                            <video data-id="{{ $material->id }}" id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload" height="200">
-                                                <source src="{{ asset('/storage'.$material->url) }}">
-                                            </video>
+                                            @if ($check == false)
+                                                <video data-id="{{ $material->id }}"  id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload noremoteplayback" height="200">
+                                                    <source src="{{ asset('/storage'.$material->url) }}">
+                                                </video>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{ $material->description }}</td>
@@ -113,6 +134,11 @@
     </div>
     </div>
 </form>
+
+<form action="/video-watched" method="post" id="watched-video">
+    @csrf
+    <input type="hidden" name="studyMaterialId" id="materialId">
+</form>
 @endsection
 
 @section('scripts')
@@ -135,19 +161,15 @@
                 $('.file_name').text('No file Chosen');
             }
         });
-
-        $('.video').on('click', function(){
-            var id = $(this).data("id");
-            var video = document.getElementById(id);
-            var video_duration = document.getElementById(id).duration
-            video.addEventListener('ended', function(){
-                $.post( "/video-watched", { name: "John", time: "2pm" } )
-                .done(function(data){
-                    console.log(data);
-                });
-                // console.log('video has ended');
+        @if(Auth::user()->role_id == 1)
+            $('.video').bind('play', function(){
+                var id = $(this).data("id");
+                $('#materialId').val(id);
+            });
+            $('.video').bind('ended', function(){
+                $('#watched-video').submit();
             })
-        })
+        @endif
     });
 </script>
 

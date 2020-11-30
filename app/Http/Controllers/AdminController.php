@@ -133,6 +133,7 @@ class AdminController extends Controller
 
     public function getStudyMaterial()
     {
+        $watch_time = Setting::where('key','Video Watch Time')->first();
         $studyMaterials = StudyMaterial::when(Auth::user()->role_id == 1, function($q){
             return $q->where('course_id', Auth::user()->studentDetail->course_id)->where('status','Public')->orderBy('created_at','DESC')->get();
         })->when(Auth::user()->role_id == 2, function($q){
@@ -141,7 +142,7 @@ class AdminController extends Controller
             return $q->orderBy('created_at','DESC')->get();
         });
         $courses = Course::get();
-        return view('admin.study_materials', compact('studyMaterials', 'courses'));
+        return view('admin.study_materials', compact('studyMaterials', 'courses', 'watch_time'));
     }
 
     public function addStudyMaterial(Request $request)
