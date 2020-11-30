@@ -36,31 +36,31 @@
                                         @foreach($students as $student)
                                             <tr>
                                                 <td>
-                                                    {{ $student->name }}
+                                                    {{ $student->user->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $student->studentDetail->course->course_name }}
+                                                    {{ $student->course->course_name }}
                                                 </td>
                                                 <td>
-                                                    {{ $student->studentDetail->fathers_name }}
+                                                    {{ $student->fathers_name }}
                                                 </td>
                                                 <td>
                                                     {{ $student->email }}
                                                 </td>
                                                 <td class="text-primary">
-                                                    {{ $student->studentDetail->contact_no }}
+                                                    {{ $student->contact_no }}
                                                 </td>
                                                 <td>
-                                                    {{ $student->studentDetail->status }}
+                                                    {{ $student->status }}
                                                 </td>
                                                 <td>
-                                                @if($student->studentDetail->status == 'Pending')
+                                                @if($student->status == 'Pending')
                                                 <div class="btn-group">
-                                                    <form action="/approve/{{ $student->id }}" method="post">
+                                                    <form action="/approve/{{ $student->user->id }}" method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-default btn-sm">Approve</button>
                                                     </form>
-                                                    <form action="/decline/{{ $student->id }}" method="post">
+                                                    <form action="/decline/{{ $student->user->id }}" method="post">
                                                         @csrf
                                                         <button type="submit" class="btn btn-warning btn-sm">Decline</button>
                                                     </form>
@@ -68,18 +68,18 @@
                                                 @else
                                                 <div class="btn-group">
                                                     <button
-                                                    data-id="{{ $student->id }}"
-                                                    data-name="{{ $student->name }}"
-                                                    data-email="{{ $student->email }}"
-                                                    data-fathersname="{{ $student->studentDetail->fathers_name }}"
-                                                    data-course="{{ $student->studentDetail->course_id }}"
-                                                    data-contact="{{ $student->studentDetail->contact_no }}"
-                                                    data-status="{{ $student->studentDetail->status }}"
+                                                    data-id="{{ $student->user->id }}"
+                                                    data-name="{{ $student->user->name }}"
+                                                    data-email="{{ $student->user->email }}"
+                                                    data-fathersname="{{ $student->fathers_name }}"
+                                                    data-course="{{ $student->course_id }}"
+                                                    data-contact="{{ $student->contact_no }}"
+                                                    data-status="{{ $student->status }}"
                                                     data-toggle="modal"
                                                     data-target="#edit"
                                                     class="btn btn-sm btn-success edit-student">Edit</button>
                                                     <button
-                                                    data-id="{{ $student->id }}"
+                                                    data-id="{{ $student->user->id }}"
                                                     data-toggle="modal"
                                                     data-target="#delete"
                                                     class="btn btn-sm btn-danger delete-student">Delete</button>

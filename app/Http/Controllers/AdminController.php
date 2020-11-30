@@ -30,10 +30,12 @@ class AdminController extends Controller
 
     public function getSpecificStudents($id)
     {
-        $students = User::where('role_id',1)->whereHas('studentDetail', function($query) use ($id){
-            $query->where('course_id', $id);
-        })
-        ->paginate(10);
+        // $students = User::where('role_id',1)->whereHas('studentDetail', function($query) use ($id){
+        //     $query->where('course_id', $id);
+        // })
+        // ->paginate(10);
+
+        $students = StudentDetail::where('course_id',$id)->orderBy('status')->paginate(10);
         $courses = Course::get();
         return view('admin.group-course', compact('students', 'courses'));
     }
