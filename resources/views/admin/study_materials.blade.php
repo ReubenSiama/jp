@@ -176,7 +176,7 @@
         @endif
     });
 </script>
-<script src="https://malsup.github.com/jquery.form.js"></script>
+<script src="https://malsup.github.io/jquery.form.js"></script>
 <script>
 (function() {
     var bar = $('.bar');
