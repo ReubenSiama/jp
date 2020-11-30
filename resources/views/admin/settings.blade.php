@@ -95,7 +95,7 @@
             <input type="hidden" name="id" id="edit-id">
             <div class="form-group">
                 <label for="edit-key">Key</label>
-                <input type="text" name="key" id="edit-key" class="form-control" required>
+                <input type="text" readonly name="key" id="edit-key" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="edit-value">Value</label>
