@@ -50,6 +50,8 @@ Route::post('/delete-faculty','App\Http\Controllers\AdminController@deleteFacult
 Route::post('/update-student','App\Http\Controllers\StudentsController@updateStudent');
 Route::post('/delete-student','App\Http\Controllers\StudentsController@deleteStudent');
 
+Route::post('/video-watched','App\Http\Controllers\StudentsController@watchedVideo');
+
 });
 // Student
 Route::post('/register','App\Http\Controllers\StudentsController@postRegister')->name('Register');

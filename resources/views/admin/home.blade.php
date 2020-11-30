@@ -10,7 +10,7 @@
                     <i class="material-icons">people</i>
                   </div>
                   <p class="card-category">Students</p>
-                  <h3 class="card-title">49
+                  <h3 class="card-title">{{ $students }}
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -28,7 +28,7 @@
                     <i class="material-icons">group</i>
                   </div>
                   <p class="card-category">Faculties</p>
-                  <h3 class="card-title">20</h3>
+                  <h3 class="card-title">{{ $faculties }}</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">

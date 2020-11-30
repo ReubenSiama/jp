@@ -74,4 +74,9 @@ class StudentsController extends Controller
         $detail->delete();
         return back()->withSuccess('Student Deleted');
     }
+
+    public function watchedVideo(Request $request)
+    {
+        return $request->all();
+    }
 }

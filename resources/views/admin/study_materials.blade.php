@@ -140,7 +140,13 @@
             var id = $(this).data("id");
             var video = document.getElementById(id);
             var video_duration = document.getElementById(id).duration
-            console.log(video);
+            video.addEventListener('ended', function(){
+                $.post( "/video-watched", { name: "John", time: "2pm" } )
+                .done(function(data){
+                    console.log(data);
+                });
+                // console.log('video has ended');
+            })
         })
     });
 </script>

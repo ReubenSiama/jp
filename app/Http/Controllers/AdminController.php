@@ -16,7 +16,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.home');
+        $students = User::where('role_id',1)->count();
+        $faculties = User::where('role_id', 2)->count();
+        return view('admin.home', compact('students','faculties'));
     }
 
     public function getStudents()
