@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        {{ $students->links() }}
+                        {{ $students->links('admin.layout.paginator') }}
                     </div>
                 </div>
             </div>

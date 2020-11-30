@@ -33,7 +33,7 @@ class AdminController extends Controller
         $students = User::where('role_id',1)->whereHas('studentDetail', function($query) use ($id){
             $query->where('course_id', $id);
         })
-        ->paginate(10);
+        ->paginate(1);
         $courses = Course::get();
         return view('admin.group-course', compact('students', 'courses'));
     }
