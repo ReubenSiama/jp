@@ -177,7 +177,7 @@
     });
 </script>
 <script src="https://malsup.github.io/jquery.form.js"></script>
-<script>
+{{-- <script>
 (function() {
     var bar = $('.bar');
     var percent = $('.percent');
@@ -207,6 +207,6 @@
         }
     }); 
 })();
-</script>
+</script> --}}
 
 @endsection
