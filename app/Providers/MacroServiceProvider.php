@@ -30,7 +30,7 @@ class MacroServiceProvider extends ServiceProvider
     {
         File::macro('streamUpload', function($path, $fileName, $file, $overWrite = true) {
             // Set up S3 connection.
-            $resource = fopen($file->getRealPath(), 'r+');
+            $resource = fopen($file->getRealPath());
             $config = Config::get('filesystems.disks.s3');
             $client = new S3Client([
                 'credentials' => [
