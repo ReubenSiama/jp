@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 use App\Models\StudyMaterial;
 use Illuminate\Http\Request;
 use App\Models\StudentDetail;
@@ -153,13 +152,12 @@ class AdminController extends Controller
         $date = Carbon::now()->timestamp;
         $file = $request->file;
         $filename = $request->title.$date.'.'.$file->getClientOriginalExtension();
-        // $path = Storage::disk('s3')->putFileAs('study_materials', $file, $filename, 'public');
-        File::streamUpload('study_materials', $file, $filename, true);
+        Storage::putFileAs('public/study_materials', $file, $filename);
 
         $studyMaterial = new StudyMaterial;
         $studyMaterial->course_id = $request->course;
         $studyMaterial->title = $request->title;
-        $studyMaterial->url = 'study_materials/'.$filename;
+        $studyMaterial->url = '/study_materials'.'/'.$filename;
         $studyMaterial->description = $request->description;
         $studyMaterial->batch = '2020-2021';
         $studyMaterial->user_id = Auth::user()->id;

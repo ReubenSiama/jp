@@ -62,7 +62,7 @@
                                         <div class="media">
                                             @if ($check == false)
                                                 <video data-id="{{ $material->id }}"  id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload noremoteplayback" height="200">
-                                                    <source src="{{ Storage::disk('s3')->url($material->url) }}">
+                                                    <source src="{{ asset('/storage'.$material->url) }}">
                                                 </video>
                                             @endif
                                         </div>
@@ -176,8 +176,8 @@
         @endif
     });
 </script>
-<script src="https://malsup.github.io/jquery.form.js"></script>
-{{-- <script>
+<script src="https://malsup.github.com/jquery.form.js"></script>
+<script>
 (function() {
     var bar = $('.bar');
     var percent = $('.percent');
@@ -207,6 +207,6 @@
         }
     }); 
 })();
-</script> --}}
+</script>
 
 @endsection
