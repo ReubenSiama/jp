@@ -45,7 +45,7 @@
                                                     {{ $student->fathers_name }}
                                                 </td>
                                                 <td>
-                                                    {{ $student->email }}
+                                                    {{ $student->user->email }}
                                                 </td>
                                                 <td class="text-primary">
                                                     {{ $student->contact_no }}
