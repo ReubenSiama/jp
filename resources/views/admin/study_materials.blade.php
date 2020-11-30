@@ -125,6 +125,10 @@
                 <label for="description">Description</label>
                 <textarea name="description" id="description" cols="30" rows="4" class="form-control"></textarea>
             </div>
+            <div class="progress">
+                <div class="bar text-right" style="background-color: green; color: white;"></div >
+                {{-- <div class="percent">0%</div > --}}
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -171,6 +175,38 @@
             })
         @endif
     });
+</script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+(function() {
+    var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+
+    $('form').ajaxForm({
+        beforeSend: function() {
+            status.empty();
+            var percentVal = '0%';
+            var posterValue = $('input[name=file]').fieldValue();
+            bar.width(percentVal)
+            bar.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal)
+            bar.html(percentVal);
+        },
+        success: function() {
+            var percentVal = 'Wait, Saving';
+            bar.width(percentVal)
+            bar.html(percentVal);
+        },
+        complete: function(xhr) {
+            status.html(xhr.responseText);
+            window.location.href = "/study-materials";
+        }
+    }); 
+})();
 </script>
 
 @endsection
