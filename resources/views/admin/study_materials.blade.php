@@ -62,7 +62,7 @@
                                         <div class="media">
                                             @if ($check == false)
                                                 <video data-id="{{ $material->id }}"  id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload noremoteplayback" height="200">
-                                                    <source src="{{ asset('/storage'.$material->url) }}">
+                                                    <source src="{{ Storage::disk('s3')->url($material->url) }}">
                                                 </video>
                                             @endif
                                         </div>

@@ -152,12 +152,12 @@ class AdminController extends Controller
         $date = Carbon::now()->timestamp;
         $file = $request->file;
         $filename = $request->title.$date.'.'.$file->getClientOriginalExtension();
-        Storage::putFileAs('public/study_materials', $file, $filename);
+        $path = Storage::disk('s3')->putFileAs('study_materials', $file, $filename, 'public');
 
         $studyMaterial = new StudyMaterial;
         $studyMaterial->course_id = $request->course;
         $studyMaterial->title = $request->title;
-        $studyMaterial->url = '/study_materials'.'/'.$filename;
+        $studyMaterial->url = $path;
         $studyMaterial->description = $request->description;
         $studyMaterial->batch = '2020-2021';
         $studyMaterial->user_id = Auth::user()->id;
