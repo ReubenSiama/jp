@@ -154,7 +154,7 @@ class AdminController extends Controller
     public function addStudyMaterial(Request $request)
     {
         $file = $request->file;
-        $filename = time().'.'.$file->getClientOriginalExtension();
+        $filename = $request->title.time().'.'.$file->getClientOriginalExtension();
 
         $disk = Storage::disk('s3');
         $disk->put('study-materials/'.$filename, fopen($file, 'r+'));
