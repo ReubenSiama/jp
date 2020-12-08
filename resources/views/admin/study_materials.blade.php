@@ -95,11 +95,10 @@
     </div>
 </div>
 
-
-
 <!-- Modal -->
 <form action="/add-study-material" method="post" enctype="multipart/form-data">
 @csrf
+<input type="hidden" name="md5" id="hash">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -153,7 +152,8 @@
 @endsection
 
 @section('scripts')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 <script>
     $(document).ready(function(){
         let fileName = null;
@@ -165,8 +165,11 @@
         });
         $('input[type="file"]').change(function(e){
             if($('input[type="file"]').val()){
+                var hash = CryptoJS.MD5(e.target.files[0].name);
+                $('#hash').val(hash);
                 fileName = e.target.files[0].name;
                 $('.file_name').text(fileName);
+                $('#hash').val = '';
             }else{
                 fileName = null;
                 $('.file_name').text('No file Chosen');
@@ -184,10 +187,8 @@
     });
 </script>
 {{-- <script src="https://malsup.github.com/jquery.form.js"></script> --}}
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
-<script>
-
+{{-- <script>
 
 (function() {
     var bar = $('.bar');
@@ -218,6 +219,6 @@
         }
     }); 
 })();
-</script>
+</script> --}}
 
 @endsection

@@ -155,25 +155,31 @@ class AdminController extends Controller
     {
         $file = $request->file;
         $filename = $request->title.time().'.'.$file->getClientOriginalExtension();
+        
 
         // $file->move('uploaded-study-materials',$filename);
 
-        $disk = Storage::disk('s3');
-        $disk->put('study_materials/'.$filename, file_get_contents($file));
-        // Storage::putFileAs('public/study_materials', $file, $filename);
+        // $disk->put('study_materials/'.$filename, file_get_contents($file));
+        if($request->md5 == md5($file->getClientOriginalName())){
+            $disk = Storage::disk('s3');
+            $disk->putFileAs('study_materials', $file, $filename);
 
-        $studyMaterial = new StudyMaterial;
-        $studyMaterial->course_id = $request->course;
-        $studyMaterial->title = $request->title;
-        $studyMaterial->url = 'study_materials/'.$filename;
-        $studyMaterial->description = $request->description;
-        $studyMaterial->batch = '2020-2021';
-        $studyMaterial->user_id = Auth::user()->id;
-        if($studyMaterial->save()){
-            return back()->withSuccess('Study Material Added successfully');
+            $studyMaterial = new StudyMaterial;
+            $studyMaterial->course_id = $request->course;
+            $studyMaterial->title = $request->title;
+            $studyMaterial->url = 'study_materials/'.$filename;
+            $studyMaterial->description = $request->description;
+            $studyMaterial->batch = '2020-2021';
+            $studyMaterial->user_id = Auth::user()->id;
+            if($studyMaterial->save()){
+                return back()->withSuccess('Study Material Added successfully');
+            }else{
+                return back()->withError('Oops! Something Went wrong');
+            }
         }else{
-            return back()->withError('Oops! Something Went wrong');
+            return back()->withError('Oops! Something Went Wrong');
         }
+
     }
 
     public function getSettings()
