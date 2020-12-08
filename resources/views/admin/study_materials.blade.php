@@ -62,12 +62,12 @@
                                         <div class="media">
                                             @if ($check == false)
                                                 <video data-id="{{ $material->id }}"  id="{{ $material->id }}" class="embed-responsive-item video" oncontextmenu="return false;" controls controlslist="nodownload noremoteplayback" height="200">
-                                                    {{-- @if ($material->id <= 9)
+                                                    @if ($material->id <= 9)
                                                         <source src="{{ asset('/storage'.$material->url) }}">
                                                     @else
-                                                        <source src="/uploaded-study-materials/{{ $material->url }}"> --}}
+                                                        {{-- <source src="/uploaded-study-materials/{{ $material->url }}"> --}} --}}
                                                         <source src="{{ Storage::disk('s3')->url($material->url) }}">
-                                                    {{-- @endif --}}
+                                                    @endif
                                                 </video>
                                             @endif
                                         </div>
