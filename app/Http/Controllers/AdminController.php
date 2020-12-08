@@ -158,22 +158,23 @@ class AdminController extends Controller
 
         // $file->move('uploaded-study-materials',$filename);
 
+        dd(fopen($file), 'w');
         $disk = Storage::disk('local');
-        $disk->putFileAs('study_materials', $file, $filename);
+        $disk->put('study-materials/'.$filename, fopen($file, 'r+'));
         // Storage::putFileAs('public/study_materials', $file, $filename);
 
-        $studyMaterial = new StudyMaterial;
-        $studyMaterial->course_id = $request->course;
-        $studyMaterial->title = $request->title;
-        $studyMaterial->url = '/study_materials/'.$filename;
-        $studyMaterial->description = $request->description;
-        $studyMaterial->batch = '2020-2021';
-        $studyMaterial->user_id = Auth::user()->id;
-        if($studyMaterial->save()){
-            return back()->withSuccess('Study Material Added successfully');
-        }else{
-            return back()->withError('Oops! Something Went wrong');
-        }
+        // $studyMaterial = new StudyMaterial;
+        // $studyMaterial->course_id = $request->course;
+        // $studyMaterial->title = $request->title;
+        // $studyMaterial->url = '/study_materials/'.$filename;
+        // $studyMaterial->description = $request->description;
+        // $studyMaterial->batch = '2020-2021';
+        // $studyMaterial->user_id = Auth::user()->id;
+        // if($studyMaterial->save()){
+        //     return back()->withSuccess('Study Material Added successfully');
+        // }else{
+        //     return back()->withError('Oops! Something Went wrong');
+        // }
     }
 
     public function getSettings()
