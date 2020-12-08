@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\User;
 use Carbon\Carbon;
 use Auth;
+use Aws\S3\MultipartUploader;
 
 use FFMpeg;
 use FFMpeg\Coordinate\Dimension;
@@ -156,14 +157,22 @@ class AdminController extends Controller
         $file = $request->file;
         $filename = $request->title.time().'.'.$file->getClientOriginalExtension();
         
-
         // $file->move('uploaded-study-materials',$filename);
 
         // $disk->put('study_materials/'.$filename, file_get_contents($file));
-        if($request->md5 == md5($file->getClientOriginalName())){
+
+        $disk = Storage::disk('s3');
+
+        $uploader = new MultipartUploader($disk->getDriver()->getAdapter()->getClient(), $file->getRealPath(), [
+            'bucket' => 'jpcareerpoint',
+            'key'    => 'study_materials/'.$filename,
+        ]);
+    
+        try {
+            $result = $uploader->upload();
             $disk = Storage::disk('s3');
             $disk->putFileAs('study_materials', $file, $filename);
-
+    
             $studyMaterial = new StudyMaterial;
             $studyMaterial->course_id = $request->course;
             $studyMaterial->title = $request->title;
@@ -176,8 +185,8 @@ class AdminController extends Controller
             }else{
                 return back()->withError('Oops! Something Went wrong');
             }
-        }else{
-            return back()->withError('Oops! Something Went Wrong');
+        } catch (MultipartUploadException $e) {
+            echo $e->getMessage();
         }
 
     }
