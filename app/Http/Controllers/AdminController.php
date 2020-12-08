@@ -165,7 +165,7 @@ class AdminController extends Controller
         $studyMaterial = new StudyMaterial;
         $studyMaterial->course_id = $request->course;
         $studyMaterial->title = $request->title;
-        $studyMaterial->url = $filename;
+        $studyMaterial->url = '/study_materials/'.$filename;
         $studyMaterial->description = $request->description;
         $studyMaterial->batch = '2020-2021';
         $studyMaterial->user_id = Auth::user()->id;
