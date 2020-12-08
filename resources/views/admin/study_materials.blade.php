@@ -66,7 +66,7 @@
                                                         <source src="{{ asset('/storage'.$material->url) }}">
                                                     @else --}}
                                                         {{-- <source src="/uploaded-study-materials/{{ $material->url }}"> --}}
-                                                        <source src="{{ asset('/storage/study_materials/'.$material->url) }}">
+                                                        <source src="{{ asset('/storage'.$material->url) }}">
                                                     {{-- @endif --}}
                                                 </video>
                                             @endif
