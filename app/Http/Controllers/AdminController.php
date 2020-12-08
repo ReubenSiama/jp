@@ -158,9 +158,9 @@ class AdminController extends Controller
 
         // $file->move('uploaded-study-materials',$filename);
 
-        dd(fopen($file), 'w');
+        dd(fopen($file, 'w'));
         $disk = Storage::disk('local');
-        $disk->put('study-materials/'.$filename, fopen($file, 'r+'));
+        $disk->put('study_materials/'.$filename, fopen($file, 'r+'));
         // Storage::putFileAs('public/study_materials', $file, $filename);
 
         // $studyMaterial = new StudyMaterial;
