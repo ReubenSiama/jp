@@ -65,7 +65,8 @@
                                                     @if ($material->id <= 9)
                                                         <source src="{{ asset('/storage'.$material->url) }}">
                                                     @else
-                                                        <source src="{{ Storage::disk('s3')->url($material->url) }}">
+                                                        <source src="/uploaded-study-materials/{{ $material->url }}">
+                                                        {{-- <source src="{{ Storage::disk('s3')->url($material->url) }}"> --}}
                                                     @endif
                                                 </video>
                                             @endif
