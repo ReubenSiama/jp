@@ -159,7 +159,7 @@ class AdminController extends Controller
         // $file->move('uploaded-study-materials',$filename);
 
         $disk = Storage::disk('local');
-        $disk->put('study-materials/'.$filename, fopen($file->getRealPath(), 'r+'));
+        $disk->putFileAs('study_materials', $file, $filename);
         // Storage::putFileAs('public/study_materials', $file, $filename);
 
         $studyMaterial = new StudyMaterial;
