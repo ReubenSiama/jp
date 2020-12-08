@@ -156,10 +156,11 @@ class AdminController extends Controller
         $file = $request->file;
         $filename = $request->title.time().'.'.$file->getClientOriginalExtension();
 
-        $file->move('uploaded-study-materials',$filename);
+        // $file->move('uploaded-study-materials',$filename);
 
-        // $disk = Storage::disk('s3');
+        // $disk = Storage::disk('local');
         // $disk->put('study-materials/'.$filename, fopen($file, 'r+'));
+        Storage::putFileAs('public/study_materials', $file, $filename);
 
         $studyMaterial = new StudyMaterial;
         $studyMaterial->course_id = $request->course;
