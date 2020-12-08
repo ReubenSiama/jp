@@ -95,13 +95,7 @@
     </div>
 </div>
 
-<div>        
-    <input type="file" id="fileUpload" accept="video/*">
- </div>    
- <div> 
-    <button onclick="s3upload()">Submit</button>    
- </div>     
- <progress max=”100” value=”0”></progress>
+
 
 <!-- Modal -->
 <form action="/add-study-material" method="post" enctype="multipart/form-data">
@@ -190,50 +184,9 @@
     });
 </script>
 {{-- <script src="https://malsup.github.com/jquery.form.js"></script> --}}
-<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 <script>
-//Bucket Configurations
-
-var bucketName = 'jpcareerpoint';
-var bucketRegion = 'ap-south-1';
-var IdentityPoolId = 'ap-south-1:e8dc8a2e-c626-470e-a19a-eee1c9193efc';
-
-AWS.config.update({
-        region: 'ap-south-1',
-        credentials: new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'ap-south-1:e8dc8a2e-c626-470e-a19a-eee1c9193efc'
-        })
-    });
-
-    var s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
-        params: {Bucket: 'jpcareerpoint'}
-});
-
-function s3upload() {
-   var files = document.getElementById('fileUpload').files;
-   if (files) 
-   {
-     var file = files[0];
-     var fileName = file.name;
-     var filePath = 'study_materials/' + fileName;
-     var fileUrl = 'https://' + bucketRegion + '.amazonaws.com/jpcareerpoint/' +  filePath;
-     s3.upload({
-        Key: filePath,
-        Body: file,
-        ACL: 'public-read'
-        }, function(err, data) {
-        if(err) {
-        reject('error');
-        }
-        alert('Successfully Uploaded!');
-        }).on('httpUploadProgress', function (progress) {
-        var uploaded = parseInt((progress.loaded * 100) / progress.total);
-        $("progress").attr('value', uploaded);
-      });
-   }
-};
 
 
 (function() {
